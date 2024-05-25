@@ -29,9 +29,9 @@ passport.use(new GoogleStrategy({
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  if(!req.user){
-    return res.redirect('/login');
-  }
+  // if(!req.user){
+  //   return res.redirect('/login');
+  // }
   return res.render('index');
 });
 
