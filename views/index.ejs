@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Document</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1 style="color: aliceblue;">Upload File to Google Drive</h1>
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".txt, .pdf, .docx, .jpg, .png" required>
+        <button type="submit">Upload</button>
+    </form>
+  </body>
+</html>
