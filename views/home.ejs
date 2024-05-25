@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heritage Location</title>
+</head>
+
+<body>
+    <h1>Find Heritage Sites</h1>
+    <button id="heritageButton">Find Heritage Nearby</button>
+
+    <script>
+        document.getElementById('heritageButton').addEventListener('click', () => {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const latitude = position.coords.latitude;
+                        const longitude = position.coords.longitude;
+
+                        // Send the location data to the server
+                        fetch('/heritage', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ latitude, longitude }),
+                        })
+                            .then(response => response.json())
+                            .then(data => {
+                                console.log('Response from server:', data);
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                            });
+                    },
+                    (error) => {
+                        console.error("Error getting location: ${ error.message }");
+                    }
+                );
+            } else {
+                console.error('Geolocation is not supported by this browser.');
+            }
+        });
+    </script>
+</body>
+
+</html>
