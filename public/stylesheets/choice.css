@@ -56,7 +56,8 @@
   }
 
   #rightImg{
-    scale: 0.8;
+    scale: 0.9;
+    height: 470px;
   }
   .right {
     width: 45%;

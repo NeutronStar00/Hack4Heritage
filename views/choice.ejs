@@ -47,6 +47,7 @@
                         .then(response => response.json())
                         .then(data => {
                             console.log('Response from server:', data);
+                            window.location.href = 'http://127.0.0.1:5500/views/map.html';
                         })
                         .catch(error => {
                             console.error('Error:', error);
