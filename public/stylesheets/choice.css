@@ -1,0 +1,133 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border box;
+    font-family: Gilroy;
+  }
+  html,
+  body {
+    width: 100%;
+    height: 100%;
+  }
+  .main {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(245, 222, 179, 0.715);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* justify-content: center; */
+    /* gap: 30px; */
+  }
+  .main h2 {
+    text-align: center;
+    position: absolute;
+    top: 2%;
+    left: 15%;
+    font-size: 35px;
+    font-weight: 900;
+    background-color: #C7B7A3;
+    padding: 20px 20px;
+     color: white;
+     border-radius: 20px;
+     letter-spacing: 3px;
+     box-shadow: 4px 4px 7px rgba(0, 0, 0, 0.747);
+     animation: mymove 5s infinite;
+    }
+    .left {
+      width: 45%;
+      height: 45%;
+      display: flex;
+      align-items: center;
+    }
+    img {
+    height: 520px;
+    width: fit-content;
+    object-fit: cover;
+    scale: 0.9;
+    border-radius: 10px;
+    filter: brightness(-9);
+    box-shadow: 5px 5px 10px black;
+    transition: all cubic-bezier(0.19, 1, 0.22, 1) 1s;
+  }
+  img:hover{
+    filter: blur(2px);
+    
+  }
+  .right {
+    width: 45%;
+    height: 45%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #lefth3
+  {
+    position: absolute;
+    color: white;
+   text-align: center;
+   margin-left: 250px;
+   font-size: 33px;
+   letter-spacing: 5px;
+   background-color: #BACD92;
+   padding: 20px 20px;
+   border-radius: 20px;
+   transition: all cubic-bezier(0.19, 1, 0.22, 1) 1s;cursor: pointer;
+  }
+  #righth3
+  {
+    position: absolute;
+    color: white;
+   text-align: center;
+   font-size: 33px;
+   letter-spacing: 5px;
+   background-color: #fb8d2d;
+   padding: 20px 20px;
+   border-radius: 20px;
+   transition: all cubic-bezier(0.19, 1, 0.22, 1) 1s;cursor: pointer;
+  }
+  
+  #leftImg:hover + #lefth3 {
+      background-color: #75A47F;
+      border-radius: initial;
+  }
+  
+  #rightImg:hover + #righth3 {
+      background-color: #F97300;
+      border-radius: initial;
+  }
+  @keyframes mymove {
+    50% {box-shadow: 10px 20px 20px #543310d3;}
+  }
+
+  footer
+{
+  width: 100%;
+  height: 40px;
+  background-color: rgba(0, 0, 0, 0.762);
+  margin-top: -40px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 7px;
+}footer
+{
+  width: 100%;
+  height: 40px;
+  background-color: rgba(0, 0, 0, 0.762);
+  margin-top: -40px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 7px;
+}
+#gif
+{
+  position: absolute;
+  height: 70px;
+  top: 3%;
+  box-shadow: 0px 0px 0px transparent;
+  left: 11%;
+}

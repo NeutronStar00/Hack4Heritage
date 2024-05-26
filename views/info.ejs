@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biodiversity Info</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/2.5.0/remixicon.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            max-width: 300px;
+            margin: auto;
+            position: relative; /* Added */
+        }
+        .arrow {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            cursor: pointer;
+            color: #333;
+        }
+        .species-img {
+            width: 40%;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .icon {
+            color: #007bff;
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        .fact {
+            font-size: 1.2em;
+            color: #28a745;
+        }
+        .info {
+            text-align: left;
+            margin-top: 20px;
+            display: none;
+        }
+        .info.active {
+            display: block;
+        }
+        .toggle-info {
+            color: #007bff;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="card" id="card">
+        <a class="arrow" style="text-decoration: none; margin-bottom: 8;" href="/upload">
+            <i class="ri-arrow-left-line" style="font-size: 32px;"></i>
+        </a>
+        <img class="species-img" src="<%= imageUrl %>" alt="<%= jsonResponse.name || jsonResponse.botanical_name %>">
+        <h2><%= jsonResponse.name || jsonResponse.botanical_name %></h2>
+        <p class="fact"><%= jsonResponse.fun_fact %></p>
+        <div class="info">
+            <% if (jsonResponse.botanical_name) { %>
+                <p><strong>Botanical Name:</strong> <%= jsonResponse.botanical_name %></p>
+                <p><strong>Historical Significance:</strong> <%= jsonResponse.historical_significance %></p>
+                <p><strong>Cultural Significance:</strong> <%= jsonResponse.cultural_significance %></p>
+                <p><strong>Uses:</strong> <%= jsonResponse.uses %></p>
+            <% } else { %>
+                <p><strong>Name:</strong> <%= jsonResponse.name %></p>
+                <p><strong>Habitat Country:</strong> <%= jsonResponse.habitat_country %></p>
+                <p><strong>Speciality:</strong> <%= jsonResponse.speciality %></p>
+                <p><strong>Cultural Significance:</strong> <%= jsonResponse.cultural_significance %></p>
+            <% } %>
+            <p><%= jsonResponse.description || "No description available." %> Data taken from Wikipedia</p>
+        </div>
+        <div class="toggle-info" onclick="toggleInfo()">Show More</div>
+    </div>
+
+    <script>
+        function toggleInfo() {
+            const info = document.querySelector('.info');
+            info.classList.toggle('active');
+
+            const toggleButton = document.querySelector('.toggle-info');
+            if (info.classList.contains('active')) {
+                toggleButton.textContent = 'Show Less';
+            } else {
+                toggleButton.textContent = 'Show More';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -4,48 +4,52 @@ const { GoogleGenerativeAI } = require("@google/generative-ai");
 // Access your API key from the environment variable
 const genAI = new GoogleGenerativeAI('AIzaSyB6UQrCNNfrNKU70Amm-fFo--8eX1zZz_I');
 
-async function runGeminiAI(latitude, longitude) {
+async function runGeminiAILocation(latitude, longitude) {
     // The Gemini 1.5 models are versatile and work with both text-only and multimodal prompts
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-    const prompt = `You will be provided with a set of coordinates representing your current location. Please use this information to identify any nearby heritage sites or historical landmarks of cultural significance.
-The response should be in the following JSON format:
-{
-"current_location": {
-"latitude": YOUR_LATITUDE,
-"longitude": YOUR_LONGITUDE
-},
-"heritage_sites": [
-{
-"name": "NAME_OF_HERITAGE_SITE_1",
-"latitude": LATITUDE_OF_SITE_1,
-"longitude": LONGITUDE_OF_SITE_1,
-"description": "BRIEF_DESCRIPTION_OF_SITE_1"
-},
-{
-"name": "NAME_OF_HERITAGE_SITE_2",
-"latitude": LATITUDE_OF_SITE_2,
-"longitude": LONGITUDE_OF_SITE_2,
-"description": "BRIEF_DESCRIPTION_OF_SITE_2"
-}
-// Add more heritage site objects as needed
-]
-}
-Replace YOUR_LATITUDE and YOUR_LONGITUDE with the coordinates of your current location. If there are no heritage sites within a reasonable distance, return an empty array for the "heritage_sites" key.
-For each heritage site identified, provide the following information:
-name: The official name or commonly known name of the heritage site.
-latitude: The latitude coordinate of the heritage site's location.
-longitude: The longitude coordinate of the heritage site's location.
-description: A brief description (1-2 sentences) about the heritage site's significance or historical importance.
-Please ensure that the response strictly follows the specified JSON format, and do not include any additional information or commentary outside of the requested data.
+    const prompt = `You will receive coordinates representing your current location. Utilize this data to identify heritage sites or historical landmarks of cultural significance within 100 kilomiters. The response should adhere to the following JSON structure:
+    {
+        "current_location": {
+          "latitude": ${latitude},
+          "longitude": ${longitude}
+        },
+        "heritage_sites": [
+          {
+            "name": "NAME_OF_HERITAGE_SITE_1",
+            "latitude": LATITUDE_OF_SITE_1,
+            "longitude": LONGITUDE_OF_SITE_1,
+            "description": "BRIEF_DESCRIPTION_OF_SITE_1",
+            "distance": "Distance_in_kilometer_from_current_location"
+          },
+          {
+            "name": "NAME_OF_HERITAGE_SITE_2",
+            "latitude": LATITUDE_OF_SITE_2,
+            "longitude": LONGITUDE_OF_SITE_2,
+            "description": "BRIEF_DESCRIPTION_OF_SITE_2",
+            "distance": "Distance_in_kilometer_from_current_location"
+          }
+          // Add more heritage site objects as needed
+        ]
+    }
+    If no heritage sites are within a reasonable distance, return an empty array for the "heritage_sites" key.
 
-Here are the coordinates: Latitude: ${latitude}, Longitude: ${longitude}`;
+    For each identified heritage site, provide the following details:
+
+    name: The official or common name of the heritage site.
+    latitude: The latitude coordinate of the site.
+    longitude: The longitude coordinate of the site.
+    description: A brief (1-2 sentences) overview of the site's significance or historical importance.
+    Ensure strict adherence to the specified JSON format. Avoid including any extraneous information beyond the requested data.
+
+    Use the provided latitude and longitude coordinates: Latitude: ${latitude}, Longitude: ${longitude}"`;
 
     try {
         const result = await model.generateContent(prompt);
         const response = await result.response;
-        const text = await response.text();
-        const jsonResponse = JSON.parse(text);
+        const text = await response.text();let cleanedText = text.replace(/```json/g, "").replace(/```/g, "").trim();
+        const jsonResponse = JSON.parse(cleanedText); // Parse cleaned text to JSON
+        console.log(jsonResponse);
         return jsonResponse;
     } catch (error) {
         console.error("Error:", error);
@@ -53,4 +57,4 @@ Here are the coordinates: Latitude: ${latitude}, Longitude: ${longitude}`;
     }
 }
 
-module.exports = runGeminiAI;
+module.exports = runGeminiAILocation;

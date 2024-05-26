@@ -28,7 +28,9 @@ async function runGeminiAI(filePath) {
     const result = await model.generateContent([prompt, imagePart]);
     const response = await result.response;
     const text = await response.text();
-    const jsonResponse = JSON.parse(text);
+    // Clean the text
+    let cleanedText = text.replace(/```json/g, "").replace(/```/g, "").trim();
+    const jsonResponse = JSON.parse(cleanedText); // Parse cleaned text to JSON
     return jsonResponse;
   } catch (error) {
     console.error("Error:", error);

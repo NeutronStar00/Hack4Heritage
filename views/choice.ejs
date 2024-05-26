@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Document</title>
+    <link rel='stylesheet' href='/stylesheets/choice.css' />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+
+  <body>
+    <img id="gif" src="/images/uploads/giphy.gif" alt="">
+  <div class="main">
+    <h2>Curious to uncover new wonders? Start your journey now</h2>
+    <div class="left">
+      <img id="leftImg"
+        src="https://images.unsplash.com/photo-1629267699730-f7467e129e65?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        alt="">
+
+        <h3 id="lefth3"> <a href="/upload">BIODIVERSITY</a></h3>
+    </div>
+    <div class="right">
+      <img id="rightImg"
+        src="https://images.unsplash.com/photo-1587436925426-c1794e91f6c1?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        alt="">
+        <h3 id="righth3">HERITAGE</h3>
+    </div>
+  </div>
+  <footer>
+    <h2> &copy; BugBusters</h2>
+  </footer>
+
+  <script>
+    document.getElementById('righth3').addEventListener('click', () => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
+
+                    // Send the location data to the server
+                    fetch('/heritage', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ latitude, longitude }),
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('Response from server:', data);
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                },
+                (error) => {
+                    console.error("Error getting location: ${ error.message }");
+                }
+            );
+        } else {
+            console.error('Geolocation is not supported by this browser.');
+        }
+    });
+</script>
+
+  </body>
+</html>
