@@ -85,7 +85,8 @@ router.get('/info', async function(req, res, next) {
     // Construct the full file path
     const fullPath = `${filePath}`;
     const imageUrl = filePath.replace(/\\/g, '/').replace('public', '');
-    const jsonResponse = await runGeminiAI(fullPath);
+    const language = req.session.language;
+    const jsonResponse = await runGeminiAI(fullPath, language);
     // Send filename along with jsonResponse
     res.render('info', { jsonResponse, imageUrl }); 
   } catch (error) {
@@ -123,6 +124,10 @@ router.post('/upload', upload.single('file'), async (req, res, next) => {
     
     const uploadedFile = await uploadFile(authClient, req.file);
     console.log('Uploaded file:', uploadedFile);
+
+    const language = req.body.language;
+    console.log(language);
+    req.session.language = language;
 
     if (!uploadedFile) {
       throw new Error('File upload failed');

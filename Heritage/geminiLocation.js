@@ -8,49 +8,41 @@ async function runGeminiAILocation(latitude, longitude) {
     // The Gemini 1.5 models are versatile and work with both text-only and multimodal prompts
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-    const prompt = `just written this :
+    const prompt = `You will receive coordinates representing your current location. Utilize this data to identify heritage sites or historical landmarks of cultural significance within 100 kilomiters. The response should adhere to the following JSON structure:
     {
-      name: 'Bhojpur Temple',
-      latitude: 23.2676,
-      longitude: 77.4204,
-      description: 'An ancient Hindu temple dedicated to Lord Shiva, built by Raja Bhoj, a Paramara king, in the 11th century. The temple complex is known for its beautiful architecture and intricate carvings.'
-    },
-    {
-      name: 'Taj-ul-Masjid',
-      latitude: 23.263,
-      longitude: 77.393,
-      description: 'One of the largest mosques in India, built in the 19th century. The mosque is known for its grand architecture and its intricate carvings.'
-    },
-    {
-      name: 'Sanchi Stupa',
-      latitude: 23.4893,
-      longitude: 77.6880,
-      description: 'A UNESCO World Heritage Site, consisting of a group of ancient Buddhist monuments, built by Emperor Ashoka in the 3rd century BCE. The stupas are known for their intricate carvings and their historical significance.'
-    },
-    {
-      name: 'Bharat Bhavan',
-      latitude: 23.2539,
-      longitude: 77.4121,
-      description: 'A cultural center, showcasing the art and culture of India. It is home to a museum, an art gallery, and a theater.'
-    },
-    {
-      name: 'Upper Lake',
-      latitude: 23.2627,
-      longitude: 77.4131,
-      description: 'A scenic artificial lake in the heart of Bhopal, surrounded by hills. It is a popular destination for boating and picnicking.'
-    },
-    {
-      name: 'Lower Lake',
-      latitude: 23.2487,
-      longitude: 77.4066,
-      description: 'Another scenic artificial lake in Bhopal, known for its beautiful sunsets. It is a popular spot for evening walks.'
-    },
-    {
-      name: 'Rani Kamalapati Railway Station',
-      latitude: 23.2636,
-      longitude: 77.4188,
-      description: 'The main railway station in Bhopal, known for its beautiful architecture. It is a great place to experience the local culture.'
-    }`;
+        "current_location": {
+          "latitude": ${latitude},
+          "longitude": ${longitude}
+        },
+        "heritage_sites": [
+          {
+            "name": "NAME_OF_HERITAGE_SITE_1",
+            "latitude": LATITUDE_OF_SITE_1,
+            "longitude": LONGITUDE_OF_SITE_1,
+            "description": "BRIEF_DESCRIPTION_OF_SITE_1",
+            "distance": "Distance_in_kilometer_from_current_location"
+          },
+          {
+            "name": "NAME_OF_HERITAGE_SITE_2",
+            "latitude": LATITUDE_OF_SITE_2,
+            "longitude": LONGITUDE_OF_SITE_2,
+            "description": "BRIEF_DESCRIPTION_OF_SITE_2",
+            "distance": "Distance_in_kilometer_from_current_location"
+          }
+          // Add more heritage site objects as needed
+        ]
+    }
+    If no heritage sites are within a reasonable distance, return an empty array for the "heritage_sites" key.
+
+    For each identified heritage site, provide the following details:
+
+    name: The official or common name of the heritage site.
+    latitude: The latitude coordinate of the site.
+    longitude: The longitude coordinate of the site.
+    description: A brief (1-2 sentences) overview of the site's significance or historical importance.
+    Ensure strict adherence to the specified JSON format. Avoid including any extraneous information beyond the requested data.
+
+    Use the provided latitude and longitude coordinates: Latitude: ${latitude}, Longitude: ${longitude}"`;
 
     try {
         const result = await model.generateContent(prompt);

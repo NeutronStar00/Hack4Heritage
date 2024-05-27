@@ -4,6 +4,7 @@
   <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
   <title>Bhopal Heritage Map</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="shortcut icon" href="../public/images/uploads/logo.png" type="image/png">
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <style>
     #map { position: absolute; top: 0; right: 0; bottom: 0; left: 0; }
@@ -52,56 +53,96 @@
       crossOrigin: true
     }).addTo(map);
 
+    const userLocation = [23.209933, 77.490]; // Your coordinates
+
     const locations = [
-      {
-        name: 'Bhojpur Temple',
-        latitude: 23.2676,
-        longitude: 77.4204,
-        description: 'An ancient Hindu temple dedicated to Lord Shiva, built by Raja Bhoj, a Paramara king, in the 11th century. The temple complex is known for its beautiful architecture and intricate carvings.'
-      },
-      {
-        name: 'Taj-ul-Masjid',
-        latitude: 23.263,
-        longitude: 77.393,
-        description: 'One of the largest mosques in India, built in the 19th century. The mosque is known for its grand architecture and its intricate carvings.'
-      },
-      {
-        name: 'Sanchi Stupa',
-        latitude: 23.4893,
-        longitude: 77.6880,
-        description: 'A UNESCO World Heritage Site, consisting of a group of ancient Buddhist monuments, built by Emperor Ashoka in the 3rd century BCE. The stupas are known for their intricate carvings and their historical significance.'
-      },
-      {
-        name: 'Bharat Bhavan',
-        latitude: 23.2539,
-        longitude: 77.4121,
-        description: 'A cultural center, showcasing the art and culture of India. It is home to a museum, an art gallery, and a theater.'
-      },
-      {
-        name: 'Upper Lake',
-        latitude: 23.2627,
-        longitude: 77.4131,
-        description: 'A scenic artificial lake in the heart of Bhopal, surrounded by hills. It is a popular destination for boating and picnicking.'
-      },
-      {
-        name: 'Lower Lake',
-        latitude: 23.2487,
-        longitude: 77.4066,
-        description: 'Another scenic artificial lake in Bhopal, known for its beautiful sunsets. It is a popular spot for evening walks.'
-      },
-      {
-        name: 'Rani Kamalapati Railway Station',
-        latitude: 23.2636,
-        longitude: 77.4188,
-        description: 'The main railway station in Bhopal, known for its beautiful architecture. It is a great place to experience the local culture.'
-      }
-    ];
-    
+  {
+    name: 'Bhojpur Temple',
+    latitude: 23.1735896,
+    longitude: 77.4366857,
+    description: 'An ancient Hindu temple dedicated to Lord Shiva, built by Raja Bhoj, a Paramara king, in the 11th century. The temple complex is known for its beautiful architecture and intricate carvings.'
+  },
+  {
+    name: 'Taj-ul-Masjid',
+    latitude: 23.2599,
+    longitude: 77.4037,
+    description: 'One of the largest mosques in India, built in the 19th century. The mosque is known for its grand architecture and its intricate carvings.'
+  },
+  {
+    name: 'Sanchi Stupa',
+    latitude: 23.4869,
+    longitude: 77.7398,
+    description: 'A UNESCO World Heritage Site, consisting of a group of ancient Buddhist monuments, built by Emperor Ashoka in the 3rd century BCE. The stupas are known for their intricate carvings and their historical significance.'
+  },
+  {
+    name: 'Bharat Bhavan',
+    latitude: 23.2454539,
+    longitude: 77.4587234,
+    description: 'A cultural center, showcasing the art and culture of India. It is home to a museum, an art gallery, and a theater.'
+  },
+  {
+    name: 'Upper Lake',
+    latitude: 23.2450,
+    longitude: 77.3737,
+    description: 'A scenic artificial lake in the heart of Bhopal, surrounded by hills. It is a popular destination for boating and picnicking.'
+  },
+  {
+    name: 'Lower Lake',
+    latitude: 23.2500,
+    longitude: 77.4148,
+    description: 'Another scenic artificial lake in Bhopal, known for its beautiful sunsets. It is a popular spot for evening walks.'
+  },
+  {
+    name: 'Rani Kamalapati Railway Station',
+    latitude: 23.222405433654785,
+    longitude: 77.43945693969727,
+    description: 'The main railway station in Bhopal, known for its beautiful architecture. It is a great place to experience the local culture.'
+  }
+];
+
+
+    // Function to calculate distance between two coordinates (Haversine formula)
+    function getDistance(lat1, lon1, lat2, lon2) {
+      const R = 6371; // Radius of the earth in km
+      const dLat = deg2rad(lat2 - lat1); 
+      const dLon = deg2rad(lon2 - lon1);
+      const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      const distance = R * c; // Distance in km
+      return distance;
+    }
+
+    // Function to convert degrees to radians
+    function deg2rad(deg) {
+      return deg * (Math.PI / 180);
+    }
+
     // Add markers with popups
-    locations.forEach(location => {
-      let marker = L.marker([location.latitude, location.longitude]).addTo(map)
-        .bindPopup(`<b>${location.name}</b><br>${location.description}<br><button onclick="window.open('https://www.google.com/maps/dir/?api=1&destination=${location.latitude},${location.longitude}', '_blank')">Get Directions</button>`);
-    });
+locations.forEach(location => {
+  const distance = getDistance(userLocation[0], userLocation[1], location.latitude, location.longitude).toFixed(2);
+  let marker = L.marker([location.latitude, location.longitude]).addTo(map)
+    .bindPopup(`
+      <b>${location.name}</b><br>${location.description}
+      <br><span style="color: #d9534f; font-weight: bold;">Distance from your location: ${distance} km</span>
+      <br><button onclick="window.open('https://www.google.com/maps/dir/?api=1&destination=${location.latitude},${location.longitude}', '_blank')">Get Directions</button>
+    `);
+});
+
+
+    // Add marker for the user's current location
+    L.marker(userLocation, {icon: L.icon({
+      iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png', // Use a green marker
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      shadowUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-shadow.png',
+      shadowSize: [41, 41],
+      shadowAnchor: [12, 41]
+    })}).addTo(map)
+      .bindPopup("<b>Your Current Location</b>");
   </script>
 </body>
 </html>

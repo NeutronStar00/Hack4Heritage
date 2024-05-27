@@ -7,6 +7,26 @@
     <link rel="shortcut icon" href="/images/uploads/logo.png" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/2.5.0/remixicon.css">
     <link rel='stylesheet' href='/stylesheets/style2.css' />
+    <style>
+      /* Basic Styling for Language Selection */
+      .language-selection {
+        color: black;
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px; /* Adjust as needed */
+        margin-left: 20px;
+      }
+
+      .language-selection label {
+        margin-right: 10px; /* Adjust as needed */
+      }
+
+      .language-selection select {
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+    </style>
   </head>
   <body>
     <div class="frame">
@@ -30,6 +50,16 @@
               </div>
               <img src="https://100dayscss.com/codepen/syncing.svg" class="syncing">
               <img src="https://100dayscss.com/codepen/checkmark.svg" class="done">
+
+              <!-- Language Selection - Place it below the upload area -->
+              <div class="language-selection">
+                <label for="language">Language:</label>
+                <select name="language" id="language">
+                  <option value="english" selected>English</option>
+                  <option value="hindi">Hindi</option>
+                </select>
+              </div>
+
               <button class="upload-btn" type="submit">Upload</button>
             </form>
         </div>
