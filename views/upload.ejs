@@ -4,6 +4,7 @@
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>upload</title>
+    <link rel="shortcut icon" href="/images/uploads/logo.png" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/2.5.0/remixicon.css">
     <link rel='stylesheet' href='/stylesheets/style2.css' />
   </head>
@@ -13,6 +14,10 @@
             <i class="ri-arrow-left-line" style="font-size: 42px;"></i>
         </a>
         <div class="center">
+          <div id="loadingAnimation" style="display: none;">
+            <!-- Add your loading animation content here -->
+            <div class="spinner"></div>
+          </div>
             <form action="/upload" method="POST" enctype="multipart/form-data">
               <div class="bar"></div>
               <div class="title">Drop file to upload</div>
@@ -30,5 +35,26 @@
         </div>
       </div>
      <script src="/javascripts/script2.js"></script>
+     <script>
+      const form = document.querySelector('form');
+const loadingAnimation = document.getElementById('loadingAnimation');
+
+form.addEventListener('submit', (event) => {
+  event.preventDefault(); // Prevent the default form submission
+
+  // Show the loading animation
+  loadingAnimation.innerHTML = `
+    <div class="loader">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <div class="logo"></div>
+    </div>
+  `;
+  loadingAnimation.style.display = 'flex';
+  form.submit();
+});
+     </script>
   </body>
 </html>

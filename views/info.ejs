@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Biodiversity Info</title>
+    <link rel="shortcut icon" href="/images/uploads/logo.png" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/2.5.0/remixicon.css">
     <style>
@@ -72,7 +73,7 @@
             <i class="ri-arrow-left-line" style="font-size: 32px;"></i>
         </a>
         <img class="species-img" src="<%= imageUrl %>" alt="<%= jsonResponse.name || jsonResponse.botanical_name %>">
-        <h2><%= jsonResponse.name || jsonResponse.botanical_name %></h2>
+        <h2><%= jsonResponse.common_name || jsonResponse.botanical_name %></h2>
         <p class="fact"><%= jsonResponse.fun_fact %></p>
         <div class="info">
             <% if (jsonResponse.botanical_name) { %>

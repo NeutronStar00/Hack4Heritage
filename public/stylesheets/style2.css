@@ -172,3 +172,85 @@
           opacity: 1;
       }
   }
+  #loadingAnimation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+  
+  .loader {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    animation: rotate 1.2s linear infinite;
+  }
+  
+  .loader span {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #a4e40e;
+  }
+  
+  .loader span:nth-child(1) {
+    top: 0;
+    left: 0;
+    animation: bounce 1s ease-in-out infinite;
+  }
+  
+  .loader span:nth-child(2) {
+    top: 0;
+    right: 0;
+    animation: bounce 1s ease-in-out infinite 0.33s;
+  }
+  
+  .loader span:nth-child(3) {
+    bottom: 0;
+    left: 0;
+    animation: bounce 1s ease-in-out infinite 0.66s;
+  }
+  
+  .loader span:nth-child(4) {
+    bottom: 0;
+    right: 0;
+    animation: bounce 1s ease-in-out infinite 0.99s;
+  }
+  
+  .logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+    background-image: url('../images/uploads/logo.png'); /* Replace with the path to your logo */
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+  
+  @keyframes rotate {
+    0% {
+      transform: rotate(0);
+    }
+    100% {
+      transform: rotate(-360deg);
+    }
+  }
+  
+  @keyframes bounce {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(20px);
+    }
+  }
