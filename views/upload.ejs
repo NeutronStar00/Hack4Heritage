@@ -8,7 +8,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/2.5.0/remixicon.css">
     <link rel='stylesheet' href='/stylesheets/style2.css' />
     <style>
-      /* Basic Styling for Language Selection */
+      .arrow {
+        text-decoration: none;
+        color: black;
+        font-size: 42px;
+        position: absolute;
+        top: 10px; /* Adjust as needed */
+        left: 10px; /* Adjust as needed */
+      }
       .language-selection {
         color: black;
         display: flex;
@@ -29,62 +36,67 @@
     </style>
   </head>
   <body>
-    <div class="frame">
-        <a class="arrow" style="text-decoration: none; color: black ;margin-bottom: 8;" href="/choice">
-            <i class="ri-arrow-left-line" style="font-size: 42px;"></i>
+    
+    <div style="height: 100vh; width: 100%; opacity: 0.7; background-color: black; position: absolute;" id="shadow"></div>
+    <div id="main">
+      <div class="frame">
+        <div style="width: 50px; height: 50px; margin-left:92%; border-radius: 50%;" id="imagediv">
+          <img style="width: 30px; height: 30px; border-radius: 50%;"  src="/images/uploads/leaf.jpg" alt="">
+        </div>
+        <a class="arrow" href="/choice">
+          <i class="ri-arrow-left-line"></i>
         </a>
         <div class="center">
           <div id="loadingAnimation" style="display: none;">
             <!-- Add your loading animation content here -->
             <div class="spinner"></div>
           </div>
-            <form action="/upload" method="POST" enctype="multipart/form-data">
-              <div class="bar"></div>
-              <div class="title">Drop file to upload</div>
-              <div class="dropzone">
-                  <div class="content">
-                      <img src="https://100dayscss.com/codepen/upload.svg" class="upload">
-                      <span class="filename"></span>
-                      <input type="file" class="input" name="file" accept=".txt, .pdf, .docx, .jpg, .png" required>
-                  </div>
+          <form action="/upload" method="POST" enctype="multipart/form-data">
+            <div class="bar"></div>
+            <div class="title">Drop file to upload</div>
+            <div class="dropzone">
+              <div class="content">
+                <img src="https://100dayscss.com/codepen/upload.svg" class="upload">
+                <span class="filename"></span>
+                <input type="file" class="input" name="file" accept=".txt, .pdf, .docx, .jpg, .png" required>
               </div>
-              <img src="https://100dayscss.com/codepen/syncing.svg" class="syncing">
-              <img src="https://100dayscss.com/codepen/checkmark.svg" class="done">
-
-              <!-- Language Selection - Place it below the upload area -->
-              <div class="language-selection">
-                <label for="language">Language:</label>
-                <select name="language" id="language">
-                  <option value="english" selected>English</option>
-                  <option value="hindi">Hindi</option>
-                </select>
-              </div>
-
-              <button class="upload-btn" type="submit">Upload</button>
-            </form>
+            </div>
+            <img src="https://100dayscss.com/codepen/syncing.svg" class="syncing">
+            <img src="https://100dayscss.com/codepen/checkmark.svg" class="done">
+             <!-- Language Selection - Place it below the upload area -->
+             <div class="language-selection">
+              <label for="language">Language:</label>
+              <select name="language" id="language">
+                <option value="english" selected>English</option>
+                <option value="hindi">Hindi</option>
+              </select>
+            </div>
+            <button class="upload-btn" type="submit">Upload</button>
+          </form>
         </div>
       </div>
-     <script src="/javascripts/script2.js"></script>
-     <script>
-      const form = document.querySelector('form');
-const loadingAnimation = document.getElementById('loadingAnimation');
-
-form.addEventListener('submit', (event) => {
-  event.preventDefault(); // Prevent the default form submission
-
-  // Show the loading animation
-  loadingAnimation.innerHTML = `
-    <div class="loader">
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-      <div class="logo"></div>
     </div>
-  `;
-  loadingAnimation.style.display = 'flex';
-  form.submit();
-});
-     </script>
+    <script src="/javascripts/script2.js"></script>
+    <script>
+      const form = document.querySelector('form');
+      const loadingAnimation = document.getElementById('loadingAnimation');
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault(); // Prevent the default form submission
+
+        // Show the loading animation
+        loadingAnimation.innerHTML = `
+          <div class="loader">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <div class="logo"></div>
+          </div>
+        `;
+        loadingAnimation.style.display = 'flex';
+        form.submit();
+      });
+    </script>
   </body>
 </html>
