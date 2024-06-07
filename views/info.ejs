@@ -87,7 +87,7 @@
                 <p><strong>Speciality:</strong> <%= jsonResponse.speciality %></p>
                 <p><strong>Cultural Significance:</strong> <%= jsonResponse.cultural_significance %></p>
             <% } %>
-            <p><%= jsonResponse.description || "No description available." %> Data taken from Wikipedia</p>
+            <p><%= jsonResponse.description || "Get more information" %> <a href="<%= jsonResponse.wikipedia_link %>"><span>Wikipedia</span></a></p>
         </div>
         <div class="toggle-info" onclick="toggleInfo()">Show More</div>
     </div>
